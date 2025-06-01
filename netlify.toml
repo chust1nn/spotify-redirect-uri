@@ -1,0 +1,7 @@
+[build]
+  functions = "functions" # Esta línea le dice a Netlify que tus funciones están en la carpeta 'functions'
+
+[[redirects]]
+  from = "/.netlify/functions/spotify-auth" # La URL a la que Spotify redirigirá
+  to = "/.netlify/functions/spotify-auth" # La ruta interna de tu función
+  status = 200 # Asegura que la función se sirva correctamente
