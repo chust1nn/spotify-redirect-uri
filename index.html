@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redirección de Spotify</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #1DB954; /* Color verde Spotify */
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+        .container {
+            background-color: rgba(0, 0, 0, 0.4);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            max-width: 600px;
+        }
+        h1 {
+            color: #ffffff;
+        }
+        p {
+            margin-bottom: 10px;
+        }
+        .code-box {
+            background-color: #000;
+            color: #1DB954;
+            padding: 15px;
+            border-radius: 5px;
+            font-family: monospace;
+            word-break: break-all; /* Asegura que las URLs largas se rompan */
+            margin-top: 20px;
+            font-size: 0.9em;
+            cursor: pointer;
+            border: 1px solid #1DB954;
+        }
+        .code-box:hover {
+            background-color: #333;
+        }
+        .copy-message {
+            margin-top: 10px;
+            font-size: 0.8em;
+            color: #bbb;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>¡Autenticación de Spotify Completada!</h1>
+        <p>Por favor, copia la URL completa de esta página (o el código si se muestra por separado) y pégala en tu consola de PowerShell/Terminal para continuar.</p>
+        <p>También puedes hacer clic en la caja de abajo para copiarla.</p>
+        <div id="redirectUrl" class="code-box">Cargando URL...</div>
+        <p class="copy-message" id="copyConfirm"></p>
+    </div>
+
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const code = urlParams.get('code');
+        const urlBox = document.getElementById('redirectUrl');
+        const copyConfirm = document.getElementById('copyConfirm');
+
+        if (code) {
+            urlBox.textContent = window.location.href; // Muestra la URL completa
+            urlBox.onclick = function() {
+                navigator.clipboard.writeText(window.location.href).then(() => {
+                    copyConfirm.textContent = '¡URL copiada al portapapeles!';
+                    setTimeout(() => copyConfirm.textContent = '', 3000);
+                }).catch(err => {
+                    copyConfirm.textContent = 'Error al copiar la URL.';
+                });
+            };
+        } else {
+            urlBox.textContent = "No se encontró el parámetro 'code'. Algo salió mal en la redirección de Spotify.";
+        }
+    </script>
+</body>
+</html>
